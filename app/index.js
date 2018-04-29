@@ -1,3 +1,4 @@
+'use strict'
 /* 
 *Primary file for API
 *
@@ -17,6 +18,7 @@ const server = http.createServer(function(req, res) {
 
   //Get the Path 
   var path = parsedUrl.pathname;
+  //apara a url
   var trimedParse = path.replace(/^\/+|\/+$/g,'');
 
   //Send the response
@@ -25,7 +27,7 @@ const server = http.createServer(function(req, res) {
   //Log the request path
   console.log('Request received on path: ' + trimedParse);
  
-})
+});
 
 // Start server, and have it listen on port 3000
 server.listen(3000, () => console.log("Server starts on port 3000 ..."));
