@@ -18,14 +18,16 @@ const server = http.createServer(function(req, res) {
 
   //Get the Path 
   var path = parsedUrl.pathname;
-  //apara a url
-  var trimedParse = path.replace(/^\/+|\/+$/g,'');
+  var trimedParse = path.replace(/^\/+|\/+$/g,'');  //apara a url
+
+  //Get the HTTP method
+  var method = req.method.toLowerCase(); // we need the string to lowercase
 
   //Send the response
   res.end("Hello World!");
 
   //Log the request path
-  console.log('Request received on path: ' + trimedParse);
+  console.log('Request received on Path->' + trimedParse + ' Method->' + method);
  
 });
 
