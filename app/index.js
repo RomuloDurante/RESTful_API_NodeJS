@@ -32,28 +32,69 @@ const server = http.createServer(function(req, res) {
   var headers = req.headers;
 
   //Get the payload, if any (the body text)
-  var decoder = new stringDecoder('utf-8');
-  var buffer = ''; // we can use var named body
+    var decoder = new stringDecoder('utf-8');
+    var buffer = ''; // we can use var named body
 
-  req.on('data', function(data) { // data parameter is the chunk 
-    buffer += decoder.write(data);
-  });
+    req.on('data', function(data) { // data parameter is the chunk 
+      buffer += decoder.write(data);
+    });
 
-  req.on('end', function() {
-    buffer += decoder.end();
-  
-    //Send the response
-    res.end("Hello World!");
+   req.on('end', function() {
+      buffer += decoder.end();
+      
+      //choose the handler this request got to
+      var chosenHandler = typeof(router[trimedParse]) !== 'undefined' ? router[trimedParse] : handlers.notFound;
 
-    // //Log the request path
-    // console.log('Request received on Path-> '
-    // + trimedParse + '\n Method-> '+ method +
-    // '\n QueryString->',queryStringObject, 
-    // '\n Headers->',headers);
+      //construct the data object to send the handler
+      const data = {
+        'trimedParse' : trimedParse,
+        'queryStringObject ': queryStringObject,
+        'method' : method,
+        'headers' : headers,
+        'payload' : buffer
 
-    console.log(buffer); 
+      }
+      console.log(data);
+
+      // router the request to the handler specified in the router
+      chosenHandler(data, function(statusCode,payload){
+
+        // Use the status code returned from the handler, or set the default status code to 200
+        statusCode = typeof(statusCode) === 'number' ? statusCode : 200;
+
+        // Use the payload returned from the handler, or set the default payload to an empty object
+        payload = typeof(payload) === 'object'? payload : {};
+
+        // Convert the payload to a string
+        var payloadString = JSON.stringify(payload);
+
+        // Return the response
+        res.writeHead(statusCode);
+        res.end(payloadString);
+        console.log("Returning this response: ",statusCode,payloadString);
+
+      });
     });
 });
 
 // Start server, and have it listen on port 3000
 server.listen(5000, () => console.log("Server starts on port 5000 ..."));
+
+// define the handlers
+const handlers = {};
+  //sample.handlers
+  handlers.sample = function(data, callback){
+    //callback http status, and pauload object
+
+    callback(406, {'name': 'sample handler'});
+  }
+  //not found handlers
+  handlers.notFound = function(data, callback) {
+    callback(404);
+  }
+
+
+//define a request router
+var router = {
+  'sample': handlers.sample
+}
