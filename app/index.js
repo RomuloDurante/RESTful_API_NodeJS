@@ -14,7 +14,7 @@ const url = require('url');
 const server = http.createServer(function(req, res) {
 
   //Get the url and Parse it
-  var parsedUrl = url.parse(req.url, true);
+  var parsedUrl = url.parse(req.url, true);//the second argument is for analyze query string
 
   //Get the Path 
   var path = parsedUrl.pathname;
@@ -27,11 +27,17 @@ const server = http.createServer(function(req, res) {
   //Get the HTTP method
   var method = req.method.toLowerCase(); // we need the string to lowercase
 
+  //Get the Headers as the object
+  var headers = req.headers;
+
   //Send the response
   res.end("Hello World!");
 
   //Log the request path
-  console.log('Request received on Path->'+ trimedParse + ' Method->'+ method + 'QueryString->', queryStringObject);
+  console.log('Request received on Path-> '
+  + trimedParse + '\n Method-> '+ method +
+   '\n QueryString->',queryStringObject, 
+  '\n Headers->',headers);
  
 });
 
