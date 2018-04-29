@@ -8,6 +8,7 @@
 //Dependencies
 const http = require('http');
 const url = require('url');
+const stringDecoder = require('string_decoder').StringDecoder;
 
 
 // The server should respond to all request with a string
@@ -30,15 +31,28 @@ const server = http.createServer(function(req, res) {
   //Get the Headers as the object
   var headers = req.headers;
 
-  //Send the response
-  res.end("Hello World!");
+  //Get the payload, if any (the body text)
+  var decoder = new stringDecoder('utf-8');
+  var buffer = ''; // we can use var named body
 
-  //Log the request path
-  console.log('Request received on Path-> '
-  + trimedParse + '\n Method-> '+ method +
-   '\n QueryString->',queryStringObject, 
-  '\n Headers->',headers);
- 
+  req.on('data', function(data) { // data parameter is the chunk 
+    buffer += decoder.write(data);
+  });
+
+  req.on('end', function() {
+    buffer += decoder.end();
+  
+    //Send the response
+    res.end("Hello World!");
+
+    // //Log the request path
+    // console.log('Request received on Path-> '
+    // + trimedParse + '\n Method-> '+ method +
+    // '\n QueryString->',queryStringObject, 
+    // '\n Headers->',headers);
+
+    console.log(buffer); 
+    });
 });
 
 // Start server, and have it listen on port 3000
