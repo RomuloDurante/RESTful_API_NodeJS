@@ -75,8 +75,7 @@ var unifieldServer = function(req, res) {
             'payload' : buffer
   
           }
-          console.log(data); //test
-  
+
           // router the request to the handler specified in the router
           chosenHandler(data, function(statusCode,payload){
   
@@ -98,15 +97,15 @@ var unifieldServer = function(req, res) {
        });
    });
 };
-/****************************************************************************** */
+/*******************************************************************************/
 
 // define the handlers
 const handlers = {};
-  //sample.handlers
-  handlers.sample = function(data, callback){
-    //callback http status, and pauload object
 
-    callback(406, {'name': 'sample handler'});
+  //ping handler
+  handlers.ping = function(data, callback){
+    //callback http status, and pauload object
+    callback(200);
   }
   //not found handlers
   handlers.notFound = function(data, callback) {
@@ -116,5 +115,5 @@ const handlers = {};
 
 //define a request router
 var router = {
-  'sample': handlers.sample
+  ping: handlers.ping
 }
