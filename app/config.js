@@ -8,13 +8,15 @@
 
  // Staging (default) environment
  environments.staging = { // NODE_ENV=staging node app
-    PORT: 3000,
+    httpPORT: 3000,
+    httpsPORT: 3001,
     envName: 'staging'
  }
 
  //Production environment
  environments.production = { //NODE_ENV=production node app
-    PORT: 5000,
+    httpPORT: 5000,
+    httpsPORT: 5001,
     envName: 'production'
  }
 
