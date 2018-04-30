@@ -9,6 +9,7 @@
 const http = require('http');
 const url = require('url');
 const stringDecoder = require('string_decoder').StringDecoder;
+const config = require('./config');
 
 
 // The server should respond to all request with a string
@@ -77,9 +78,10 @@ const server = http.createServer(function(req, res) {
         });
       });
 });
+// Start server
+server.listen(config.PORT, () => console.log("Server starts on port -> " + config.PORT + " in [" + config.envName +"] mode."));
 
-// Start server, and have it listen on port 3000
-server.listen(5000, () => console.log("Server starts on port 5000 ..."));
+/****************************************************************************** */
 
 // define the handlers
 const handlers = {};
