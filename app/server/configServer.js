@@ -9,11 +9,32 @@
 
   // -> Depedencies
   const $http = require('http'),
-        $url = require('url');
+        $url = require('url'),
+        $stringDecoder = require('string_decoder').StringDecoder;
 
 
   //End Dependencies
 //***************************************************** */
+
+  // decoder the body (payload)
+    const decoder = {
+      body  : (req, res) => {
+        var decoder = new $stringDecoder('utf-8');
+        var buffer = '';
+  
+        req.on('data', (data) => { buffer += decoder.write(data) });
+        
+        req.on('end', () => {
+          buffer += decoder.end();
+  
+          res.end('hello world');
+  
+          console.log(buffer);
+        });
+      }
+
+    }
+//**************************************************************** */
 
   // -> Handle URl
   const handleUrl = {
@@ -56,10 +77,10 @@
           // get the obj url 
            var obj = handleUrl.obj(parsedUrl, req);
 
-            console.log(obj.headers);
+          //Get the payload
+          decoder.body(req, res);
 
-            handleUrl.send(res)
-           } 
+          } 
 
         ).listen(3000, () => console.log('Server Start PORT-> 3000'));
       }
