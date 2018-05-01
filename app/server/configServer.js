@@ -1,8 +1,10 @@
+//I know that require + module.exports return a secure object.
+//  But I prefer to set my code this way, I *think it gets more organized if i use a IIFE.
+
 /**
  * Configure the server
- * 
- *I know that require + module.exports return a secure object. But I prefer to set my code this way, I *think it gets more organized if i use a IIFE.
  */
+ 
 
 ((global)=>{
   //Depedencies
