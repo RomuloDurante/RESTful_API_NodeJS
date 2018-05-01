@@ -8,27 +8,31 @@
 ((global)=>{
 
   // -> Depedencies
-  const _http = require('http'),
-        _url = require('url');
+  const $http = require('http'),
+        $url = require('url');
 
 
   //End Dependencies
 //***************************************************** */
   // -> Handle URl
-  const url = {
+  const handleUrl = {
     //Get the url and parse it
-    parsedUrl: (req) => { return _url.parse(req.url, true)},
+    parsedUrl: (req) => { return $url.parse(req.url, true)},
 
     //Send the response
-    send: (res) => { res.end('Hello World !' + url.obj) },
+    send: (res) => { res.end('Hello World !' + handleUrl.obj) },
 
     //Log the request Path
 
     //create the URL object
-     obj: (parsedUrl) => {
+     obj: (parsedUrl, req) => {
        return {
         //Get the Path and trimmed it with replace
-        path: parsedUrl.pathname.replace(/^\/+|\/+$/g,'')
+        path: parsedUrl.pathname.replace(/^\/+|\/+$/g,''),
+
+        //Get the HTTP method
+        method: req.method.toLowerCase(),
+
        }
     }
 
@@ -39,13 +43,16 @@
   const server = {
     //config http server
       http: () =>{
-          return  _http.createServer( (req, res) =>{ 
+          return  $http.createServer( (req, res) =>{ 
+          // get the parse url
+          var parsedUrl = handleUrl.parsedUrl(req);
+
           // get the obj url 
-           var obj = url.obj(url.parsedUrl(req));
+           var obj = handleUrl.obj(parsedUrl, req);
 
-            console.log(obj.path);
+            console.log(obj.method);
 
-            url.send(res)
+            handleUrl.send(res)
            } 
 
         ).listen(3000, () => console.log('Server Start PORT-> 3000'));
