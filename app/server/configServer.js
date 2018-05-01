@@ -14,6 +14,7 @@
 
   //End Dependencies
 //***************************************************** */
+
   // -> Handle URl
   const handleUrl = {
     //Get the url and parse it
@@ -34,13 +35,16 @@
         method: req.method.toLowerCase(),
 
         //Get the queryString Object
-        queryString: parsedUrl.query
+        queryString: parsedUrl.query,
+
+        //Get the Headers Object
+        headers: req.headers
        }
     }
 
   }
 
-/***************************************************** */
+//***************************************************** */
   // ->Server Config
   const server = {
     //config http server
@@ -52,7 +56,7 @@
           // get the obj url 
            var obj = handleUrl.obj(parsedUrl, req);
 
-            console.log(obj.queryString);
+            console.log(obj.headers);
 
             handleUrl.send(res)
            } 
