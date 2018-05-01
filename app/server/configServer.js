@@ -17,7 +17,7 @@
   // -> Handle URl
   const handleUrl = {
     //Get the url and parse it
-    parsedUrl: (req) => { return $url.parse(req.url, true)},
+    parsedUrl: (req) => { return $url.parse(req.url, true)}, //the true argument is for use with queryString
 
     //Send the response
     send: (res) => { res.end('Hello World !' + handleUrl.obj) },
@@ -33,6 +33,8 @@
         //Get the HTTP method
         method: req.method.toLowerCase(),
 
+        //Get the queryString Object
+        queryString: parsedUrl.query
        }
     }
 
@@ -50,7 +52,7 @@
           // get the obj url 
            var obj = handleUrl.obj(parsedUrl, req);
 
-            console.log(obj.method);
+            console.log(obj.queryString);
 
             handleUrl.send(res)
            } 
