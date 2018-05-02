@@ -11,15 +11,17 @@
   // ->Server Config
   const server = {
     //config http server
-    http: (PORT) => {
+    http: (config) => {
       return $http.createServer((req, res) => {
 
         //Routing and get the payload
         Routing(req, res);
       }
-      ).listen(PORT, () => console.log('Server Start PORT->'+ PORT));
+      ).listen(config.PORT, () => console.log('Server Start in ['+config.envName+']-mode : PORT-> '+ config.PORT));
     }
   }
 
 //Export server
 module.exports = server;
+
+// , () => console.log('Server Start in ['+config.envName+'] : PORT-> '+ config.PORT)
