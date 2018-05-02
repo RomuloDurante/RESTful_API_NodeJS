@@ -1,5 +1,12 @@
-const server = require('./server/server'),
-      config = require('./server/configApp'); // we need call because return a function
+ /**
+  *  Start the servers
+  */
+ // -> Depedencies
+ 
+ const server = require('./server/server'),
+ config = require('./lib/configApp'); 
+ // End Dependencies
+
 
 // Start HTTP server
 server.http(config);
