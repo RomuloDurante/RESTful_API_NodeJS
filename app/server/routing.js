@@ -1,5 +1,5 @@
 /**
- *  Payload for resquest and response 
+ *  Routing 
  */
 
 // -> Depedencies
@@ -9,7 +9,7 @@ const $stringDecoder = require('string_decoder').StringDecoder,
 
 // End Dependencies
 
-// Payload
+// Routing
 const Routing = (req, res) => {
     //create decoder
     var decoder = new $stringDecoder('utf-8');
@@ -40,8 +40,9 @@ const Routing = (req, res) => {
         var payloadString = JSON.stringify(payload);
 
         //send the response
+        res.setHeader('Content-Type', 'application/json')//response Json format
         res.writeHead(statusCode);
-        res.end('hello world');
+        res.end(payloadString);
         console.log(statusCode, payloadString);
       });
     });
