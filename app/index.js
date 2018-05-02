@@ -1,6 +1,9 @@
-const server = require('./server/setServer'),
-      config = require('./config'); // we need call because return a function
+const server = require('./server/server'),
+      config = require('./server/configApp'); // we need call because return a function
 
-//start http server
+// Start HTTP server
 server.http(config);
+
+// Start HTTPS server
+server.https(config);
 

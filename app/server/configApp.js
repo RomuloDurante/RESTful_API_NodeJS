@@ -8,20 +8,22 @@
 const environments = {
   // Staging object
   development: {
-      PORT: 3000,
+      httpPORT: 3000,
+      httpsPORT:3001,
       envName: 'development'
   },
 
   // Production object
   production: {
-    PORT: 5000,
+    httpPORT: 5000,
+    httpsPORT:5001,
     envName: 'production'
   }
 
 } // -> end environments
 /*************************************** */
 
-// Determine which environment shold passed as a command-line
+// Determine which environment should passed as a command-line
 const currentEnv = typeof(process.env.NODE_ENV) == 'string' ? process.env.NODE_ENV.toLowerCase() : '';
 
 // check the current environment exist, if not default development

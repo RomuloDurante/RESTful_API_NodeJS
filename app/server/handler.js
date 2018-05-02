@@ -1,5 +1,5 @@
 /**
- *  Handlers for manipulate url and request path
+ *  Handlers for manipulate 
  */
 
 // -> Depedencies
@@ -36,10 +36,10 @@ const handler = {
     }
   },
 
-  //sample handler
-  sample: (data, callback) => {
+  //ping handler
+  ping: (data, callback) => {
     // Callback a http status code and payload
-    callback(406, { "name": "Romulo" });
+    callback(200);
   },
 
   // Not founder handler

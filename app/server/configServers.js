@@ -1,16 +1,15 @@
 /**
- *  Routing 
+ *  Configure the http and https server
  */
 
 // -> Depedencies
 const $stringDecoder = require('string_decoder').StringDecoder,
-             handler = require('./handler');
-
+            router = require('./routers');
 
 // End Dependencies
 
-// Routing
-const Routing = (req, res) => {
+// config and configServers
+const configServers= (req, res) => {
     //create decoder
     var decoder = new $stringDecoder('utf-8');
     var buffer = '';
@@ -23,18 +22,18 @@ const Routing = (req, res) => {
       buffer += decoder.end();
 
       // get the obj url 
-      var objUrl = handler.url(req, buffer);
+      var objUrl = router.url(req, buffer);
       
-      //choose the handler( if handler do not exists use default)
-      var chosenHandler = handler.chosenHandler(handler, objUrl);
+      //choose the router( if router do not exists use default)
+      var chosenRouter = router.chosenHandler(handler, objUrl);
       
       //call the choosed handler
-      chosenHandler(objUrl, (statusCode, payload)=> {
+      chosenRouter(objUrl, (statusCode, payload)=> {
         // use the status code back by handler, or default 200
-        statusCode = typeof(statusCode === 'number') ? statusCode : 200;
+        statusCode = typeof(statusCode) === 'number' ? statusCode : 200;
 
         //use the payload back by handler or default empty object
-        payload = typeof(payload === 'object') ? payload : {};
+        payload = typeof(payload) === 'object' ? payload : {};
 
         //convert the paylod to a string
         var payloadString = JSON.stringify(payload);
@@ -49,4 +48,4 @@ const Routing = (req, res) => {
 }
 
 // exports Payload
-module.exports = Routing;
+module.exports = configServers;
