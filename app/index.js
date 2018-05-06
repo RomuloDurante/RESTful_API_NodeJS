@@ -3,14 +3,14 @@
   */
  // -> Depedencies
  
- const server = require('./server/server'),
- config = require('./lib/configApp'); 
+ const createServer = require('./server/createServer'),
+ config = require('./lib/config'); 
  // End Dependencies
 
 
 // Start HTTP server
-server.http(config);
+createServer.http(config);
 
 // Start HTTPS server
-server.https(config);
+createServer.https(config);
 

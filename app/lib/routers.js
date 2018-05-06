@@ -4,17 +4,14 @@
  */
 
  // -> Depedencies
-const handler = require('./handler');
-
-
+const handler = require('./handlers');
 // End Dependencies
 
-// Router requests
+// Public Router requests
 const routers = {
-  url: handler.url,
   ping: handler.ping,
-  chosenHandler: handler.chosenHandler
-
+  users: handler.users,
+  notFound: handler.notFound,
 }
 
 // Export routers

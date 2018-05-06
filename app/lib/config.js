@@ -10,14 +10,16 @@ const environments = {
   development: {
       httpPORT: 3000,
       httpsPORT:3001,
-      envName: 'development'
+      envName: 'development',
+      hashSecret: 'testKey'
   },
 
   // Production object
   production: {
     httpPORT: 5000,
     httpsPORT:5001,
-    envName: 'production'
+    envName: 'production',
+    hashSecret: 'testKey2'
   }
 
 } // -> end environments

@@ -3,12 +3,16 @@
  */
 
 // -> Depedencies
-const $url = require('url');
+const $url = require('url'),
+      _users = require('./methods/_users');
+  
 
-// End Dependencies
+//End Dependencies
+
+/******************************************************************* */
 
 // Handler
-const handler = {
+const handlers = {
   //handler url and payload(buffer/body)
   url: (req, buffer) => {
     //Parse the url
@@ -37,13 +41,13 @@ const handler = {
   },
 
   //ping handler
-  ping: (data, callback) => {
+  ping: (objUrl, callback) => {
     // Callback a http status code and payload
     callback(200);
   },
 
   // Not founder handler
-  notFound: (data, callback) => {
+  notFound: (objUrl, callback) => {
     callback(404);
   },
 
@@ -59,8 +63,21 @@ const handler = {
     }
   },
 
+  // Users
+  users: (objUrl, callback)=> {
+      // chosen the method
+      var methods = ['post', 'get', 'put', 'delete'];
+      if(methods.indexOf(objUrl.method) > -1) {
+
+        //if get the method call the function
+         _users[objUrl.method](objUrl, callback);
+
+      } else {
+        callback(405);
+      }
+  },
 
 } //->End Handlers
 
 // Export handlers
-module.exports = handler;
+module.exports = handlers;

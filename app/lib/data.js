@@ -29,15 +29,15 @@ const data = {
                     if(!err) {
                         callback(false);
                     } else {
-                      callback('Error closing new file');
+                      callback({'Error': 'closing new file'});
                     }
                   }); 
               } else {
-                callback('Error to write new file!');
+                callback({'Error': 'no write new file!'});
               }              
             });
         } else {
-          callback('Cold not create a new file, it may already exist !');
+          callback({'Cold not create a new file,': 'it may already exist !'});
         }
       });
     },
@@ -49,7 +49,7 @@ const data = {
       });
     },
 
-    // Upadate new file
+    // Update new file
     update: (dir, fileName, data, callback)=> {
       $fs.open(baseDir + dir + '/' + fileName + '.json','r+', (err, fileDescriptor)=> {
         if(!err && fileDescriptor){
