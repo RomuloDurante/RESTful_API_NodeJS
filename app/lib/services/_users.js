@@ -132,7 +132,7 @@
               // delete
               _data.delete('users', phone, ()=> {
                 if(!err){
-                  callback(200); 
+                  callback(200, {ok : 'User was deleted'}); 
                 }else {
                  callback(500, {'Error' : 'Could not delete the user'}); 
                 }
