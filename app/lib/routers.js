@@ -1,17 +1,19 @@
 /**
  * Define object router requests
- * obs-> Way to organize the handlers
  */
 
  // -> Depedencies
-const handler = require('./handlers');
+    const  _checking = require('./services/_checking'),
+           _users = require('./services/_users'),
+           _tokens = require('./services/_tokens');
 // End Dependencies
 
 // Public Router requests
 const routers = {
-  ping: handler.ping,
-  users: handler.users,
-  notFound: handler.notFound,
+  users: _users.startService,
+  ping: _checking.ping,
+  notFound: _checking.notFound,
+  token: _tokens
 }
 
 // Export routers

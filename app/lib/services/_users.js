@@ -10,7 +10,7 @@
 
  // End Dependencies
  // Object method
-  const methods = {
+  const _users = {
     // method POST
     // Required data: firstname, lastname, phone, password, toAsgreement (no optional data)
     post: (objUrl, callback)=>{
@@ -146,8 +146,22 @@
         callback(400, {'Error':'phone does not exists'})
       }
     },
+
+    // chosen the method
+    startService: (objUrl, callback) => {
+            // chosen the method
+            var methods = ['post', 'get', 'put', 'delete'];
+            if(methods.indexOf(objUrl.method) > -1) {
+      
+              //if get the method call the function
+               _users[objUrl.method](objUrl, callback);
+      
+            } else {
+              callback(405);
+            }
+    }
   }
 
   // Export methods
 
-  module.exports = methods;
+  module.exports = _users;

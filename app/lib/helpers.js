@@ -3,7 +3,6 @@
  * 
  */
 
-
  // -> Depedencies
  const crypto = require('crypto'),
       config = require('./config');
@@ -13,6 +12,7 @@
  
  // container for all the helpers
  const helpers = {
+
    // validation 
    // this validation is for test, when we are on real production we need use ReGex to validate
    validation: (objUrl, method)=> {  
@@ -52,7 +52,8 @@
           return dt;
         }
      
-   },
+   }, 
+/******************************************************* */ 
 
    // Password hash SHA256 
    hashPass: (password)=> {
@@ -62,6 +63,7 @@
       return newPass;
    },
 
+   /******************************************************* */
    // Parse the JSON file
    parseJson: (jsonFile)=> {
       try {

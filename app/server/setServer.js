@@ -4,8 +4,9 @@
 
 // -> Depedencies
 const $stringDecoder = require('string_decoder').StringDecoder,
-            handler = require('../lib/handlers');
-            router = require('../lib/routers');
+            routers = require('../lib/routers'),
+            _objUrl = require('../lib/services/_objUrl'),
+            _checking = require('../lib/services/_checking');
 
 // End Dependencies
 
@@ -26,11 +27,11 @@ const setServer= (req, res) => {
     req.on('end', () => {
           buffer += decoder.end();
 
-          // get the obj url 
-          var objUrl = handler.url(req, buffer);
-
+          // create the obj url 
+          var objUrl = _objUrl.create(req, buffer);
+          
           //choose the router( if router do not exists use default)
-          var chosenRouter = handler.chosenHandler(handler, objUrl);
+          var chosenRouter = _checking.chooseRouter(routers, objUrl);
           
           //call the choosed handler
           chosenRouter(objUrl, (statusCode, body)=> {
@@ -41,7 +42,7 @@ const setServer= (req, res) => {
             //check of body exists
             body = typeof(body) === 'object' ? body : {};
 
-            //convert the paylod to a string
+            //convert the paylod(body) to a string
             var body = JSON.stringify(body);
 
             //send the response
