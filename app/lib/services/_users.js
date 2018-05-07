@@ -95,7 +95,7 @@
               // store the data
               _data.update('users', phone, update, (err)=> {
                 if(!err){
-                  callback(200);
+                  callback(200, {OK : 'User was update'});
                 }else {
                   callback(500, {"Error": 'Could not update the user'});
                 }

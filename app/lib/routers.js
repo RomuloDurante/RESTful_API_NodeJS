@@ -12,8 +12,7 @@
 const routers = {
   users: _users.startService,
   ping: _checking.ping,
-  notFound: _checking.notFound,
-  token: _tokens
+  notFound: _checking.notFound
 }
 
 // Export routers
