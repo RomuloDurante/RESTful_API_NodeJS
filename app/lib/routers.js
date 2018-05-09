@@ -3,16 +3,43 @@
  */
 
  // -> Depedencies
-    const  _checking = require('./services/_checking'),
-           _users = require('./services/_users'),
-           _tokens = require('./services/_tokens');
+    const  _users = require('./services/users/users');
 // End Dependencies
 
 // Public Router requests
 const routers = {
+  // SERVICES
+
+  // Users service
   users: _users.startService,
-  ping: _checking.ping,
-  notFound: _checking.notFound
+
+
+  /*********************************************** */
+  // COMMOM SERVICES
+
+ //check status server
+  ping: (objUrl, callback) => {
+    // Callback a http status code and payload
+    callback(200, {"Ping": "Ok ->..."});
+  },
+
+  // not found path
+  notFound: (objUrl, callback) => {
+    callback(404, {"Error": "Routine not found"});
+  },
+
+  //choose router
+  choose: (objUrl) => {
+      
+      if(routers[objUrl.path] && objUrl.path !== 'choose') {
+
+        return routers[objUrl.path];
+
+      } else{
+        return routers.notFound;
+      }
+    }
+
 }
 
 // Export routers

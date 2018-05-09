@@ -9,7 +9,7 @@
  // End Dependencies
 
  // create a base directory
- const baseDir = path.join(__dirname, '/../.data/');
+ const baseDir = path.join(__dirname, '/../../.data/');
 
 
  //Data object

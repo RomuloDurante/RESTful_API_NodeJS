@@ -5,8 +5,7 @@
 // -> Depedencies
 const $stringDecoder = require('string_decoder').StringDecoder,
             routers = require('../lib/routers'),
-            _objUrl = require('../lib/services/_objUrl'),
-            _checking = require('../lib/services/_checking');
+            _objUrl = require('./_objUrl');
 
 // End Dependencies
 
@@ -30,9 +29,8 @@ const setServer= (req, res) => {
           // create the obj url 
           var objUrl = _objUrl.create(req, buffer);
           
-          //choose the router( if router do not exists use default)
-          var chosenRouter = _checking.chooseRouter(routers, objUrl);
-          
+          //choose the router( if router do not exists use notfound)
+          var chosenRouter = routers.choose(objUrl);
           //call the choosed handler
           chosenRouter(objUrl, (statusCode, body)=> {
 
