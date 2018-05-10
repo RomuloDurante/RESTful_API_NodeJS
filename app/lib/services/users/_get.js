@@ -11,16 +11,16 @@ const helpers = require('../../helpers'),
 const get = (objUrl, callback) => {
 
   // validate the phone send for query string
-  var body = helpers.valid(objUrl);
+  var loadData = helpers.valid(objUrl);
 
   // Verify the If the token exists and if the ID match, so allow the user acess the service
- _tokensVerify(body.headers.token, body.queryString.phone, (tokenIsValid)=> {
+ _tokensVerify(loadData.headers.token, loadData.queryString.phone, (tokenIsValid)=> {
     if(tokenIsValid) {
 
      /***************************GET USER SERVICE**************************************/ 
-      if (body.queryString.phone) {
+      if (loadData.queryString.phone) {
         // looked the user
-        _data.read('users', body.queryString.phone, (err, data) => {
+        _data.read('users', loadData.queryString.phone, (err, data) => {
           if (!err && data) {
             //parse the data
             data = helpers.parseJson(data);

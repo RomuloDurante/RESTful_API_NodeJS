@@ -13,8 +13,12 @@ const helpers = require('../../helpers'),
 //require fields: ID and EXTEND
 //Optional data : node
 const _put = (objUrl, callback) => {
+  // var load data
+   var loadData = helpers.valid(objUrl);
+
   // validate the phone send for query string
-  var body = helpers.valid(objUrl);
+  var body = loadData.body;
+
 
   if(body.id && body.extend){
      // looked the token

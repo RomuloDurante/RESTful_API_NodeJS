@@ -10,9 +10,10 @@ const helpers = require('../../helpers'),
 // End Dependencies
 
 const _post = (objUrl, callback) => {
-
+  // var load data
+  var loadData = helpers.valid(objUrl);
   // validate the object and create body
-  var body = helpers.valid(objUrl);
+  var body = loadData.body;
 
   if (body.phone && body.password) {
     _data.read('users', body.phone, (err, userData) => {

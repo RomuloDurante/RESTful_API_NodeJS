@@ -13,11 +13,11 @@ const helpers = require('../../helpers'),
 //optional data : none
 const _get = (objUrl, callback) => {
 // validate the phone send for query string
-  var body = helpers.valid(objUrl);
+  var loadData = helpers.valid(objUrl);
 
-  if (body.queryString.id) {
+  if (loadData.queryString.id) {
     // looked the token
-    _data.read('tokens', body.queryString.id, (err, tokenData) => {
+    _data.read('tokens', loadData.queryString.id, (err, tokenData) => {
       if (!err && tokenData) {
         //parse the data
         parseData = helpers.parseJson(tokenData);

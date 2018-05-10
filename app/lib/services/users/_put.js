@@ -9,12 +9,14 @@ const helpers = require('../../helpers'),
 // End Dependencies
 
 const put = (objUrl, callback) => {
+   // var load data
+   var loadData = helpers.valid(objUrl);
 
     // validation for data update
-    var dataToUpdate = helpers.valid(objUrl); // the body
+    var dataToUpdate = loadData.body; // the body
     
   // Verify the If the token exists and if the ID match, so allow the user acess the service
-  _tokensVerify(dataToUpdate.headers.token, dataToUpdate.queryString.phone, (tokenIsValid)=> {
+  _tokensVerify(loadData.headers.token, loadData.queryString.phone, (tokenIsValid)=> {
     if(tokenIsValid) {
 
   /***************************GET PUT SERVICE**************************************/   

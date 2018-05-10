@@ -68,16 +68,18 @@
     
           // make some verifications
           var dt = {
-            firstName: typeof(body.firstName) === 'string' && body.firstName.trim().length > 0 ? body.firstName.trim() : false,
-            lastName: typeof(body.lastName) === 'string' && body.lastName.trim().length > 0 ? body.lastName.trim() : false,
-            phone: typeof(body.phone) === 'string' && body.phone.trim().length === 10 ? body.phone.trim() : false,
-            password: typeof(body.password) === 'string' && body.password.trim().length > 0 ? body.password.trim() : false,
-            toAsgreement: typeof(body.toAsgreement) === 'boolean' && body.toAsgreement === true ? true : false,
-            
-             // Validation for expires and id
-             extend: typeof(body.extend) === 'boolean' && body.extend === true ? true : false,
-             id: typeof(body.id) === 'string' && body.id.trim().length === 60 ? body.id.trim() : false,
-
+            //validate the body
+            body:{
+              firstName: typeof(body.firstName) === 'string' && body.firstName.trim().length > 0 ? body.firstName.trim() : false,
+              lastName: typeof(body.lastName) === 'string' && body.lastName.trim().length > 0 ? body.lastName.trim() : false,
+              phone: typeof(body.phone) === 'string' && body.phone.trim().length === 10 ? body.phone.trim() : false,
+              password: typeof(body.password) === 'string' && body.password.trim().length > 0 ? body.password.trim() : false,
+              toAsgreement: typeof(body.toAsgreement) === 'boolean' && body.toAsgreement === true ? true : false,
+              // Validation for expires and id
+              extend: typeof(body.extend) === 'boolean' && body.extend === true ? true : false,
+              id: typeof(body.id) === 'string' && body.id.trim().length === 60 ? body.id.trim() : false,
+            },
+          
             // validation for the Headers
             headers: {
               token: typeof(objUrl.headers.token)  === 'string' ? objUrl.headers.token : false,

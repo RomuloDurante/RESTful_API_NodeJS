@@ -9,8 +9,11 @@ const helpers = require('../../helpers'),
 // End Dependencies
 
 const post = (objUrl, callback) => {
+  // var load data
+  var loadData = helpers.valid(objUrl);
+
   // validathe the object and create body
-  var body = helpers.valid(objUrl);
+  var body = loadData.body;
 
   // if body exists 
   if (body.firstName && body.lastName && body.password && body.phone && body.toAsgreement) {
@@ -20,8 +23,6 @@ const post = (objUrl, callback) => {
     // beacuse this validation is for the get method
     delete body.extend;
     delete body.id;
-    delete body.queryString;
-
 
     // create a new user if no exists in .data/users
     _data.create('users', body.phone, body, (err) => {
