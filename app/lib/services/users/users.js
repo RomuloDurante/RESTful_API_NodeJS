@@ -4,31 +4,29 @@
  */
 
 
- const users = {
-     post: require('./_post'),
+const users = {
+  post: require('./_post'),
 
-     get: require('./_get'),
+  get: require('./_get'),
 
-     put: require('./_put'),
+  put: require('./_put'),
 
-     delete: require('./_delete'),
+  delete: require('./_delete'),
 
+  // chosen the method
+  startService: (objUrl, callback) => {
     // chosen the method
-    startService: (objUrl, callback) => {
-      // chosen the method
-      var methods = ['post', 'get', 'put', 'delete'];
-      if(methods.indexOf(objUrl.method) > -1) {
+    var methods = ['post', 'get', 'put', 'delete'];
+    if (methods.indexOf(objUrl.method) > -1) {
 
-        //if get the method call the function
-         users[objUrl.method](objUrl, callback);
+      //if get the method call the function
+      users[objUrl.method](objUrl, callback);
 
-      } else {
-        callback(405);
-      }
+    } else {
+      callback(405);
+    }
+  }
 
-      console.log(objUrl);
-    } 
+}
 
- }
-
- module.exports = users;
+module.exports = users;

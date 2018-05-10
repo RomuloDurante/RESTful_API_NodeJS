@@ -3,7 +3,8 @@
  */
 
  // -> Depedencies
-    const  _users = require('./services/users/users');
+    const  _users = require('./services/users/users'),
+           _tokens = require('./services/token/tokens');
 // End Dependencies
 
 // Public Router requests
@@ -12,6 +13,9 @@ const routers = {
 
   // Users service
   users: _users.startService,
+
+  // Tokens Service
+  tokens: _tokens.startService,
 
 
   /*********************************************** */

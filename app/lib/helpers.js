@@ -13,48 +13,6 @@
  // container for all the helpers
  const helpers = {
 
-   // validation 
-   // this validation is for test, when we are on real production we need use ReGex to validate
-   validation: (objUrl, method)=> {  
-      // Parse the body from objUrl       
-        const body = helpers.parseJson(objUrl.body);
-      
-        if(method === 'post'){
-            // make some verifications
-            var dt = {
-              firstName: typeof(body.firstName) === 'string' && body.firstName.trim().length > 0 ? body.firstName.trim() : false,
-              lastName: typeof(body.lastName) === 'string' && body.lastName.trim().length > 0 ? body.lastName.trim() : false,
-              phone: typeof(body.phone) === 'string' && body.phone.trim().length === 10 ? body.phone.trim() : false,
-              password: typeof(body.password) === 'string' && body.password.trim().length > 0 ? body.password.trim() : false,
-              toAsgreement: typeof(body.toAsgreement) === 'boolean' && body.toAsgreement === true ? true : false,
-            }
-
-            // Return true or false
-            if(dt.firstName && dt.lastName && dt.phone && dt.password && dt.toAsgreement){
-              // hash the password
-              dt.password =  helpers.hashPass(dt.password);
-
-              // return the data object
-              return dt;
-            } else {
-              return false
-            }   
-
-        } else if(method === 'put') {
-
-          // fiels can be update for the user
-          var dt = {
-            firstName: typeof(body.firstName) === 'string' && body.firstName.trim().length > 0 ? body.firstName.trim() : false,
-            lastName: typeof(body.lastName) === 'string' && body.lastName.trim().length > 0 ? body.lastName.trim() : false,
-            password: typeof(body.password) === 'string' && body.password.trim().length > 0 ? body.password.trim() : false,
-          }
-
-          return dt;
-        }
-     
-   }, 
-/******************************************************* */ 
-
    // Password hash SHA256 
    hashPass: (password)=> {
 
@@ -77,17 +35,63 @@
 
    /********************************************************* */
    // generate TOKEN
-   token: ()=> {
+   token: (phone)=> {
     var token = '';
     for (let i = 0; i < 20; i++) {
-      var randon = Math.floor(Math.random() * 25);
-              // ASCII char 
-      token += String.fromCharCode(97 + i) + String.fromCharCode(65 + i) + Math.floor(Math.random() * 10);
+      var randon1 = Math.floor(Math.random() * 25);
+      var randon2 = Math.floor(Math.random() * 25);
+      var randon3 = Math.floor(Math.random() * 10);
+     // ASCII char 
+     if( i % 2 === 0){
+      token += String.fromCharCode(97 + randon1) + String.fromCharCode(65 + randon2) + randon3;
+     } else {
+      token += String.fromCharCode(65 + randon2) + String.fromCharCode(97 + randon1) + randon3;
+     }
+      
     }
     
+    const tokenObj = {
+      id: token,
+      phone: phone,
+      expires: Date.now() + 1000 * 60 * 60
+    }
+   
+    return tokenObj;
+   },
 
-    return token;
-   }
+   /**************************************************** */
+
+   // validates strings
+   valid: (objUrl, method)=> {  
+    // Parse the body from objUrl       
+      const body = helpers.parseJson(objUrl.body);
+    
+          // make some verifications
+          var dt = {
+            firstName: typeof(body.firstName) === 'string' && body.firstName.trim().length > 0 ? body.firstName.trim() : false,
+            lastName: typeof(body.lastName) === 'string' && body.lastName.trim().length > 0 ? body.lastName.trim() : false,
+            phone: typeof(body.phone) === 'string' && body.phone.trim().length === 10 ? body.phone.trim() : false,
+            password: typeof(body.password) === 'string' && body.password.trim().length > 0 ? body.password.trim() : false,
+            toAsgreement: typeof(body.toAsgreement) === 'boolean' && body.toAsgreement === true ? true : false,
+            
+             // Validation for expires and id
+             extend: typeof(body.extend) === 'boolean' && body.extend === true ? true : false,
+             id: typeof(body.id) === 'string' && body.id.trim().length === 60 ? body.id.trim() : false,
+
+            // validation for the Headers
+            headers: {
+              token: typeof(objUrl.headers.token)  === 'string' ? objUrl.headers.token : false,
+            },
+
+            // validation for query strings
+            queryString: {
+                phone: typeof(objUrl.queryString.phone) === 'string' && objUrl.queryString.phone.trim().length === 10 ?objUrl.queryString.phone.trim() : false,
+                id: typeof(objUrl.queryString.id) === 'string' && objUrl.queryString.id.trim().length === 60 ?objUrl.queryString.id.trim() : false,
+             }
+          }
+            // return the data object
+            return dt;
+  }
 
 
  }

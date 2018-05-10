@@ -47,7 +47,7 @@ const setServer= (req, res) => {
             res.setHeader('Content-Type', 'application/json')//response Json format
             res.writeHead(statusCode);
             res.end(body);
-            console.log(statusCode, body);
+            // console.log(statusCode, body);
       });
     });
 }

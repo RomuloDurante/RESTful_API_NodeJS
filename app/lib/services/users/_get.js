@@ -1,35 +1,48 @@
 /**
- * 
+ * GET METHOD FOR USERS
  * 
  */
- // -> Depedencies
- const helpers = require('../../helpers'),
-          _data = require('../data');
+// -> Depedencies
+const helpers = require('../../helpers'),
+  _data = require('../data');
+  _tokensVerify = require('../token/tokens').verify;
 
+// End Dependencies
+const get = (objUrl, callback) => {
 
- // End Dependencies
- const get = (objUrl, callback)=>{
+  // validate the phone send for query string
+  var body = helpers.valid(objUrl);
 
-  var phone = typeof(objUrl.queryString.phone) === 'string' && objUrl.queryString.phone.trim().length === 10 ?objUrl.queryString.phone.trim() : false ;
+  // Verify the If the token exists and if the ID match, so allow the user acess the service
+ _tokensVerify(body.headers.token, body.queryString.phone, (tokenIsValid)=> {
+    if(tokenIsValid) {
 
-  if(phone) {
-    // looked the user
-    _data.read('users', phone, (err, data)=>{
-      if(!err && data) {
-        //parse the data
-        data = helpers.parseJson(data);
-
-        // remove the password
-        delete data.password;
-
-        callback(200, data);
+     /***************************GET USER SERVICE**************************************/ 
+      if (body.queryString.phone) {
+        // looked the user
+        _data.read('users', body.queryString.phone, (err, data) => {
+          if (!err && data) {
+            //parse the data
+            data = helpers.parseJson(data);
+    
+            // remove the password
+            delete data.password;
+    
+            callback(200, data);
+          } else {
+            callback(404);
+          }
+        });
       } else {
-        callback(404);
+        callback(400, { 'Error': 'phone does not exists' })
       }
-    });
-  } else {
-    callback(400, {'Error':'phone does not exists'})
-  }
+    /************************************************************************************ */
+
+    }else {
+      callback(403, {Error: 'Missing require token and header'});
+    }
+ });
+
 };
 
 

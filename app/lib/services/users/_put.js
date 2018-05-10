@@ -1,59 +1,62 @@
 /**
- * 
+ * PUT METHOD FOR USERS
  * 
  */
- // -> Depedencies
- const helpers = require('../../helpers'),
-          _data = require('../data');
+// -> Depedencies
+const helpers = require('../../helpers'),
+  _data = require('../data'),
+  _tokensVerify = require('../token/tokens').verify;
+// End Dependencies
 
+const put = (objUrl, callback) => {
 
- // End Dependencies
+    // validation for data update
+    var dataToUpdate = helpers.valid(objUrl); // the body
+    
+  // Verify the If the token exists and if the ID match, so allow the user acess the service
+  _tokensVerify(dataToUpdate.headers.token, dataToUpdate.queryString.phone, (tokenIsValid)=> {
+    if(tokenIsValid) {
 
- const put = (objUrl, callback)=>{
+  /***************************GET PUT SERVICE**************************************/   
+      if (dataToUpdate.phone) {
+        if (dataToUpdate.firstName || dataToUpdate.lastName || dataToUpdate.password) {
+          // Lookup the user
+          _data.read('users', dataToUpdate.phone, (err, userData) => {
 
-  //parse body
-  var body = helpers.parseJson(objUrl.body);
- // validate phone
-  var phone = typeof(body.phone) === 'string' && body.phone.trim().length === 10 ? body.phone.trim() : false ;
- 
-  // validation for data update
-  var dataToUpdate = helpers.validation(objUrl, 'put');
+            if (!err && userData) {
+              //parse the data
+              var update = helpers.parseJson(userData);
 
-  if(phone) {
-     if(dataToUpdate.firstName || dataToUpdate.lastName || dataToUpdate.password) {
-       // Lookup the user
-       _data.read('users', phone, (err, userData)=> {
-        
-         if(!err && userData){
-         //parse the data
-          var update = helpers.parseJson(userData);
+              dataToUpdate.firstName ? update.firstName = dataToUpdate.firstName : '';
+              dataToUpdate.lastName ? update.lastName = dataToUpdate.lastName : '';
+              dataToUpdate.password ? update.password = helpers.hashPass(dataToUpdate.firstName) : '';
 
-          dataToUpdate.firstName ? update.firstName = dataToUpdate.firstName : '';
-          dataToUpdate.lastName ? update.lastName = dataToUpdate.lastName : '';
-          dataToUpdate.password ? update.password = helpers.hashPass(dataToUpdate.firstName): '';
-        
-         // store the data
-         _data.update('users', phone, update, (err)=> {
-           if(!err){
-             callback(200, {OK : 'User was update'});
-           }else {
-             callback(500, {"Error": 'Could not update the user'});
-           }
-         });
-          
+              // store the data
+              _data.update('users', dataToUpdate.phone, update, (err) => {
+                if (!err) {
+                  callback(200, { OK: 'User was update' });
+                } else {
+                  callback(500, { "Error": 'Could not update the user' });
+                }
+              });
+            } else {
+              callback(400, { 'Error': 'The especified users does not exists' });
+            }
+          });
+        } else {
+          callback(400, { 'Error': 'Missing fields to update' });
+        }
+      } else {
+        callback(400, { 'Error': 'Missing required fields' });
+      }
+  /************************************************************************************ */
 
-         }else {
-          callback(400, {'Error': 'The especified users does not exists'}); 
-         }
-       });
-
-     }else {
-       callback(400, {'Error': 'Missing fields to update'});
-     }
-  } else {
-    callback(400, {'Error' : 'Missing required fields'});
-  }
+    }else {
+      callback(403, {Error: 'Missing require token and header'});
+    }
+  });
 
 }
 
 module.exports = put;
+
