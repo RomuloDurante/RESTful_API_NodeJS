@@ -89,7 +89,23 @@
             queryString: {
                 phone: typeof(objUrl.queryString.phone) === 'string' && objUrl.queryString.phone.trim().length === 10 ?objUrl.queryString.phone.trim() : false,
                 id: typeof(objUrl.queryString.id) === 'string' && objUrl.queryString.id.trim().length === 60 ?objUrl.queryString.id.trim() : false,
-             }
+             },
+
+             // verify the protocol
+             protocol: typeof(body.protocol)  === 'string'  && ['http', 'https'].indexOf(body.protocol) > -1 ? body.protocol : false,
+
+             // verify the url
+             url: typeof(body.url) === 'string' && body.url.trim().length > 0 ? body.url.trim() : false,
+
+            // verify the method
+             method: typeof(body.method)  === 'string'  && ['post', 'get', 'put', 'delete'].indexOf(body.method) > -1 ? body.method : false,
+
+            // verify the sucessCode
+             sucessCode: typeof(body.sucessCode) === 'object' && body.sucessCode instanceof Array && body.sucessCode.length > 0 ? body.sucessCode : false,
+
+            // verify the url
+             timeOutSeconds: typeof(body.timeOutSeconds) === 'number' && body.timeOutSeconds % 1 === 0 && body.timeOutSeconds >=1 && body.timeOutSeconds <= 5 ? body.timeOutSeconds : false,
+            
           }
             // return the data object
             return dt;

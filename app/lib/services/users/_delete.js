@@ -23,10 +23,41 @@ const _delete = (objUrl, callback) => {
         // looked the user
         _data.read('users', loadData.queryString.phone, (err, data) => {
           if (!err && data) {
+            // parse the data
+            var userData = helpers.parseJson(data);
+
             // delete
-            _data.delete('users', loadData.queryString.phone, () => {
+            _data.delete('users', loadData.queryString.phone, (err) => {
               if (!err) {
-                callback(200, { ok: 'User was deleted' });
+
+                // delete each of the checks associate with the user
+                var userChecks = typeof(userData.checks) === 'object' && userData.checks instanceof Array ? userData.checks : [];    
+                var checksToDelete = userChecks.length;
+                if(checksToDelete > 0) {
+                    var checkDeleted = 0;
+                    var deletionErros = false;
+                    // loop througth the cheks
+                    userChecks.forEach( (checkId) => {
+                      // Delete the check
+                     _data.delete('checks', checkId, (err)=> {
+                      if(err) {
+                        deletionErros = true;
+                      } 
+                        checkDeleted++;
+                        if(checkDeleted === checksToDelete){
+                          if(!deletionErros){
+                            callback(200);
+                          } else {
+                            callback(500, {Error : 'Erros encoutered while delete the user checks'});
+                          }
+                        }                      
+                     });
+                                  
+                    });
+                } else {
+                  callback(200);
+                }
+                
               } else {
                 callback(500, { 'Error': 'Could not delete the user' });
               }

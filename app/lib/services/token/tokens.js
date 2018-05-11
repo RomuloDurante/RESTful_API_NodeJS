@@ -18,6 +18,7 @@ const tokens = {
 
 // verify if token and id is corrently valid
 verify: (id, phone, callback)=> {
+  
   _data.read('tokens', id, (err, tokenData)=> {
      //parse the data
      parseData = helpers.parseJson(tokenData);

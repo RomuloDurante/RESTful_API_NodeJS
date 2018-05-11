@@ -12,7 +12,7 @@ const helpers = require('../../helpers'),
 // require data: id
 //optional data : none
 const _get = (objUrl, callback) => {
-// validate the phone send for query string
+// validate the id
   var loadData = helpers.valid(objUrl);
 
   if (loadData.queryString.id) {

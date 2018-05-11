@@ -11,7 +11,8 @@ const environments = {
       httpPORT: 3000,
       httpsPORT:3001,
       envName: 'development',
-      hashSecret: 'testKey'
+      hashSecret: 'testKey',
+      maxChecks: 5
   },
 
   // Production object
@@ -19,7 +20,8 @@ const environments = {
     httpPORT: 5000,
     httpsPORT:5001,
     envName: 'production',
-    hashSecret: 'testKey2'
+    hashSecret: 'testKey2',
+    maxChecks: 5
   }
 
 } // -> end environments
