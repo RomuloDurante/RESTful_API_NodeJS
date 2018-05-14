@@ -12,12 +12,12 @@ const helpers = require('../../helpers'),
 
 //require fields: ID and EXTEND
 //Optional data : node
-const _put = (objUrl, callback) => {
-  // var load data
-   var loadData = helpers.valid(objUrl);
+const _put = (payload, callback) => {
+  // payload object
+   var _payload = helpers.valid(payload);
 
   // validate the phone send for query string
-  var body = loadData.body;
+  var body = _payload.body;
 
 
   if(body.id && body.extend){

@@ -6,10 +6,11 @@
 //   token += String.fromCharCode(97 + i) + String.fromCharCode(65 + i) + Math.floor(Math.random() * 10);
 // }
 
-var helpers = require('./app/lib/helpers');
+
+var fs = require('fs');
 
 
-var token = helpers.token();
+var test = fs.readFileSync('./fell1.docx');
 
-console.log(token.id.length);
+console.log(test.toString());
 

@@ -8,12 +8,12 @@ const helpers = require('../../helpers'),
 
 // End Dependencies
 
-const post = (objUrl, callback) => {
-  // var load data
-  var loadData = helpers.valid(objUrl);
+const post = (payload, callback) => {
+  // payload object
+  var _payload = helpers.valid(payload);
 
   // validathe the object and create body
-  var body = loadData.body;
+  var body = _payload.body;
 
   // if body exists 
   if (body.firstName && body.lastName && body.password && body.phone && body.toAsgreement) {

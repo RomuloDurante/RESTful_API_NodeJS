@@ -10,10 +10,10 @@ const helpers = require('../../helpers'),
 
 // Required data : ID
 // Optional data None
-const _delete = (objUrl, callback) => {
-  //validate the id send for query string
-  var loadData = helpers.valid(objUrl);
-  var id = loadData.queryString.id;
+const _delete = (payload, callback) => {
+  //payload object
+  var _payload = helpers.valid(payload);
+  var id = _payload.queryString.id;
   // llok the check
   _data.read('checks', id, (err, data)=> {
     if(!err && data) {
@@ -21,7 +21,7 @@ const _delete = (objUrl, callback) => {
       var checkData = helpers.parseJson(data);
 
       // Verify the If the token exists and if the ID match, so allow the user acess the service
-      _tokensVerify(loadData.headers.token, checkData.phone, (tokenIsValid)=> {
+      _tokensVerify(_payload.headers.token, checkData.phone, (tokenIsValid)=> {
         if(tokenIsValid) {
 
           // delete the check data

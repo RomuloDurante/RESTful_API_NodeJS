@@ -13,18 +13,18 @@ const helpers = require('../../helpers'),
 
 // Required data: id
 // Optional data: none
-const _get = (objUrl, callback) => {
-  // validate the id
-    var loadData = helpers.valid(objUrl);
+const _get = (payload, callback) => {
+  // payload object
+    var _payload = helpers.valid(payload);
 
   // look the check
-    _data.read('checks', loadData.queryString.id, (err, data)=>{
+    _data.read('checks', _payload.queryString.id, (err, data)=>{
       if(!err && data) {
           //parse the data
           var checkData = helpers.parseJson(data);
         
         //verify the token and belongs to the user who create the check
-        _tokensVerify(loadData.headers.token, checkData.phone, (tokenIsValid)=> {         
+        _tokensVerify(_payload.headers.token, checkData.phone, (tokenIsValid)=> {         
           if(tokenIsValid) {
           // return the check data
             callback(200, checkData);

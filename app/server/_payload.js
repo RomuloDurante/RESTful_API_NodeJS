@@ -7,7 +7,7 @@
  const $url = require('url');
  // End dependencies
 
- const _objUrl = {
+ const _payload = {
   create: (req, buffer) => {
     //Parse the url
     function parsedUrl(req) {
@@ -36,4 +36,4 @@
  }
 
  //exports
- module.exports = _objUrl;
+ module.exports = _payload;

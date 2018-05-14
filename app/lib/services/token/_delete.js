@@ -12,16 +12,16 @@ const helpers = require('../../helpers'),
 
 //Required data : ID
 //Optional data: None
-const _delete = (objUrl, callback) => {
-  //validate the id send for query string
-  var loadData = helpers.valid(objUrl);
+const _delete = (payload, callback) => {
+  //payload object
+  var _payload = helpers.valid(payload);
 
-  if (loadData.queryString.id) {
+  if (_payload.queryString.id) {
     // looked the user
-    _data.read('tokens', loadData.queryString.id, (err, data) => {
+    _data.read('tokens', _payload.queryString.id, (err, data) => {
       if (!err && data) {
         // delete
-        _data.delete('tokens', loadData.queryString.id, () => {
+        _data.delete('tokens', _payload.queryString.id, () => {
           if (!err) {
             callback(200, { ok: 'User token was deleted' });
           } else {

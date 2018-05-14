@@ -5,7 +5,7 @@
 // -> Depedencies
 const $stringDecoder = require('string_decoder').StringDecoder,
             routers = require('../lib/routers'),
-            _objUrl = require('./_objUrl');
+            payload = require('./_payload');
 
 // End Dependencies
 
@@ -26,13 +26,13 @@ const setServer= (req, res) => {
     req.on('end', () => {
           buffer += decoder.end();
 
-          // create the obj url 
-          var objUrl = _objUrl.create(req, buffer);
+          // create the payload object 
+          var _payload = payload.create(req, buffer);
           
           //choose the router( if router do not exists use notfound)
-          var chosenRouter = routers.choose(objUrl);
+          var chosenRouter = routers.choose(_payload);
           //call the choosed handler
-          chosenRouter(objUrl, (statusCode, body)=> {
+          chosenRouter(_payload, (statusCode, body)=> {
 
             // use the status code back by handler, or default 200
             statusCode = typeof(statusCode) === 'number' ? statusCode : 200;

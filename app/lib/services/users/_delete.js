@@ -10,24 +10,24 @@ const _data = require('../data'),
 
 // End Dependencies
 
-const _delete = (objUrl, callback) => {
-  // validate the phone send for query string
-    var loadData = helpers.valid(objUrl);
+const _delete = (payload, callback) => {
+  // payload object
+    var _payload = helpers.valid(payload);
 
   // Verify the If the token exists and if the ID match, so allow the user acess the service
-  _tokensVerify(loadData.headers.token, loadData.queryString.phone, (tokenIsValid)=> {
+  _tokensVerify(_payload.headers.token, _payload.queryString.phone, (tokenIsValid)=> {
     if(tokenIsValid) {
 
     /***************************GET DELETE SERVICE**************************************/ 
-      if (loadData.queryString.phone) {
+      if (_payload.queryString.phone) {
         // looked the user
-        _data.read('users', loadData.queryString.phone, (err, data) => {
+        _data.read('users', _payload.queryString.phone, (err, data) => {
           if (!err && data) {
             // parse the data
             var userData = helpers.parseJson(data);
 
             // delete
-            _data.delete('users', loadData.queryString.phone, (err) => {
+            _data.delete('users', _payload.queryString.phone, (err) => {
               if (!err) {
 
                 // delete each of the checks associate with the user

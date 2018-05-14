@@ -11,13 +11,13 @@ const helpers = require('../../helpers'),
 
 // require data: id
 //optional data : none
-const _get = (objUrl, callback) => {
-// validate the id
-  var loadData = helpers.valid(objUrl);
+const _get = (payload, callback) => {
+// payload object
+  var _payload = helpers.valid(payload);
 
-  if (loadData.queryString.id) {
+  if (_payload.queryString.id) {
     // looked the token
-    _data.read('tokens', loadData.queryString.id, (err, tokenData) => {
+    _data.read('tokens', _payload.queryString.id, (err, tokenData) => {
       if (!err && tokenData) {
         //parse the data
         parseData = helpers.parseJson(tokenData);

@@ -26,22 +26,22 @@ const routers = {
   // COMMOM SERVICES
 
  //check status server
-  ping: (objUrl, callback) => {
+  ping: (payload, callback) => {
     // Callback a http status code and payload
     callback(200, {"Ping": "Ok ->..."});
   },
 
   // not found path
-  notFound: (objUrl, callback) => {
+  notFound: (payload, callback) => {
     callback(404, {"Error": "Routine not found"});
   },
 
   //choose router
-  choose: (objUrl) => {
+  choose: (payload) => {
       
-      if(routers[objUrl.path] && objUrl.path !== 'choose') {
+      if(routers[payload.path] && payload.path !== 'choose') {
 
-        return routers[objUrl.path];
+        return routers[payload.path];
 
       } else{
         return routers.notFound;

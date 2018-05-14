@@ -9,15 +9,15 @@ const helpers = require('../../helpers'),
         _tokensVerify = require('../token/tokens').verify;
 // end dependencies
 
-const _put = (objUrl, callback)=> {
-  // validate the id
-  var loadData = helpers.valid(objUrl);
+const _put = (payload, callback)=> {
+  // payload object
+  var _payload = helpers.valid(payload);
   // get the id
-  var id = loadData.body.id;
+  var id = _payload.body.id;
 
   if(id) {
     // check make sure the optional data has been sent
-    if(loadData.protocol || loadData.url || loadData.method || loadData.sucessCode || loadData.timeOutSeconds) {
+    if(_payload.protocol || _payload.url || _payload.method || _payload.sucessCode || _payload.timeOutSeconds) {
       // read the checks
       _data.read('checks', id, (err, data)=> {
         if(!err && data) {
@@ -25,14 +25,14 @@ const _put = (objUrl, callback)=> {
           var checkData = helpers.parseJson(data);
 
           //verify the token and belongs to the user who create the check
-          _tokensVerify(loadData.headers.token, checkData.phone, (tokenIsValid)=> {         
+          _tokensVerify(_payload.headers.token, checkData.phone, (tokenIsValid)=> {         
             if(tokenIsValid) {
               // Update the checkObjet
-              loadData.protocol ? checkData.protocol = loadData.protocol : '';
-              loadData.url ? checkData.url= loadData.url : '';
-              loadData.method ? checkData.method = loadData.method : '';
-              loadData.sucessCode ? checkData.sucessCode = loadData.sucessCode : '';
-              loadData.timeOutSeconds ? checkData.timeOutSeconds = loadData.timeOutSeconds : '';
+              _payload.protocol ? checkData.protocol = _payload.protocol : '';
+              _payload.url ? checkData.url= _payload.url : '';
+              _payload.method ? checkData.method = _payload.method : '';
+              _payload.sucessCode ? checkData.sucessCode = _payload.sucessCode : '';
+              _payload.timeOutSeconds ? checkData.timeOutSeconds = _payload.timeOutSeconds : '';
 
               // store the updates
               _data.update('checks', id, checkData, (err)=> {

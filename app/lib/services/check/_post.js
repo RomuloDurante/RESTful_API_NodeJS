@@ -12,13 +12,13 @@ const helpers = require('../../helpers'),
 
  // Required data: protocol, url, method, sucessCodes, timeOutSeconds
  //Optional Data : none
- const _post = (objUrl, callback)=> {
-   // verify load data
-  var loadData = helpers.valid(objUrl);
+ const _post = (payload, callback)=> {
+   // payload object
+  var _payload = helpers.valid(payload);
 
-  if(loadData.protocol && loadData.url && loadData.method && loadData.sucessCode && loadData.timeOutSeconds) {
+  if(_payload.protocol && _payload.url && _payload.method && _payload.sucessCode && _payload.timeOutSeconds) {
     // Get the token from the header
-    var token = loadData.headers.token;
+    var token = _payload.headers.token;
 
     // try to read the token from the user
     _data.read('tokens', token, (err, data)=> { 
@@ -43,11 +43,11 @@ const helpers = require('../../helpers'),
                 delete checkObj.expires; // this is valid for the token
 
                 // update the checkObj with this values
-                checkObj.protocol = loadData.protocol;
-                checkObj.url = loadData.url;
-                checkObj.method = loadData.method;
-                checkObj.sucessCode = loadData.sucessCode;
-                checkObj.timeOutSeconds = checkObj.timeOutSeconds;
+                checkObj.protocol = _payload.protocol;
+                checkObj.url = _payload.url;
+                checkObj.method = _payload.method;
+                checkObj.sucessCode = _payload.sucessCode;
+                checkObj.timeOutSeconds = _payload.timeOutSeconds;
 
                 // save the check object
                 _data.create('checks', checkObj.id, checkObj, (err)=> {

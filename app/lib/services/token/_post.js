@@ -9,11 +9,11 @@ const helpers = require('../../helpers'),
 
 // End Dependencies
 
-const _post = (objUrl, callback) => {
-  // var load data
-  var loadData = helpers.valid(objUrl);
+const _post = (payload, callback) => {
+  // payload object
+  var _payload = helpers.valid(payload);
   // validate the object and create body
-  var body = loadData.body;
+  var body = _payload.body;
 
   if (body.phone && body.password) {
     _data.read('users', body.phone, (err, userData) => {

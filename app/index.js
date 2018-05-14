@@ -3,14 +3,29 @@
   */
  // -> Depedencies
  
- const createServer = require('./server/createServer'),
- config = require('./lib/config'); 
+ const startServer = require('./server/startServer'),
+             config = require('./lib/config');
+            workers = require('./lib/workers/workers');
  // End Dependencies
 
 
-// Start HTTP server
-createServer.http(config);
+const app = {
+  init: ()=> {
+    // Start HTTP server
+    startServer.http(config);
+    // Start HTTPS server
+    startServer.https(config);
 
-// Start HTTPS server
-createServer.https(config);
+    // // Start workers
+    // workers.init();
+
+
+  }
+}
+
+app.init();
+
+
+// Exports app
+module.exports = app;
 

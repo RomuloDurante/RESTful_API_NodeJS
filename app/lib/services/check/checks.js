@@ -13,13 +13,13 @@ const checks = {
   delete: require('./_delete'),
 
   // chosen the method
-  startService: (objUrl, callback) => {
+  startService: (payload, callback) => {
     // chosen the method
     var methods = ['post', 'get', 'put', 'delete'];
-    if (methods.indexOf(objUrl.method) > -1) {
+    if (methods.indexOf(payload.method) > -1) {
 
       //if get the method call the function
-      checks[objUrl.method](objUrl, callback);
+      checks[payload.method](payload, callback);
 
     } else {
       callback(405);

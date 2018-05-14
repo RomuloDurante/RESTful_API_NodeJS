@@ -10,7 +10,7 @@
   //End Dependencies
 
   // ->Server Config
-  const createServer = {
+  const startServer = {
     //config HTTP server
     http: (config) => {
       return $http.createServer((req, res) => {
@@ -31,5 +31,5 @@
   }
 
 //Export server
-module.exports = createServer;
+module.exports = startServer;
 
