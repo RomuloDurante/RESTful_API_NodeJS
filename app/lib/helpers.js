@@ -137,8 +137,8 @@
           dt.sucessCode && 
           dt.timeOutSeconds && 
           dt.url){
-
             return dt;
+            
         } else {
           return false;
         }
