@@ -30,7 +30,7 @@ const gatherAllChecks = require('./gatherAllChecks');
     loop: (fn)=>{
       setInterval(()=>{
        fn();
-      },1000 * 60);
+      },1000 * 5);
     },
 
     // Timer to execulte log-rotation process one time per day

@@ -4,7 +4,9 @@
  https = require('https'),
  http = require('http'),
  url = require('url'),
- processCheckOutcome = require('./processCheckOutcome');
+ processCheckOutcome = require('./processCheckOutcome'),
+ util = require('util');
+ debug = util.debuglog('workers');
  /*** */
 
 

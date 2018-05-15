@@ -5,7 +5,9 @@
 // -> Depedencies
 const $stringDecoder = require('string_decoder').StringDecoder,
             routers = require('../lib/routers'),
-            payload = require('./_payload');
+            payload = require('./_payload'),
+            util = require('util');
+            var debug = util.debuglog('server');
 
 // End Dependencies
 
@@ -41,13 +43,19 @@ const setServer= (req, res) => {
             body = typeof(body) === 'object' ? body : {};
 
             //convert the paylod(body) to a string
-            var body = JSON.stringify(body);
+            var payloadString = JSON.stringify(body);
 
             //send the response
             res.setHeader('Content-Type', 'application/json')//response Json format
             res.writeHead(statusCode);
-            res.end(body);
-            // console.log(statusCode, body);
+            res.end(payloadString);
+
+            //if the response is 200(print green) otherwise print red
+            if(statusCode == 200){
+              debug('\x1b[32m%s\x1b[0m',_payload.method.toUpperCase()+' /'+_payload.path+' '+statusCode);
+            } else {
+              debug('\x1b[31m%s\x1b[0m',_payload.method.toUpperCase()+' /'+_payload.path+' '+statusCode);
+            }
       });
     });
 }

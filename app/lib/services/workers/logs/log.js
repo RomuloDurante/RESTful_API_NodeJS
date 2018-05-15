@@ -4,7 +4,9 @@
   */
  
  // Dependencies
-const _logs = require('./_logs');
+const _logs = require('./_logs'),
+util = require('util');
+ debug = util.debuglog('workers');
 
  /*** */
 
@@ -23,9 +25,9 @@ const _logs = require('./_logs');
           // Append the log string to the file
           _logs.append(data, (err)=>{
             if(!err) {
-              console.log("Logging to the file succeded");
+              debug("Logging to the file succeded");
             } else {
-              console.log("loggin to file FAILED");
+              debug("loggin to file FAILED");
             }
           });
           

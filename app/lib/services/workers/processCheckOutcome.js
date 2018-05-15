@@ -1,7 +1,9 @@
  // Dependencies
  const _data = require('../data'),
        alertUser = require('./alertUser'),
-       log = require('./logs/log');
+       log = require('./logs/log'),
+       util = require('util');
+ debug = util.debuglog('workers');
  /*** */
 
  const processCheckOutcome = (validCheck, checkOutcome)=>{
@@ -30,10 +32,10 @@
           if(alertWanted) {
              alertUser(newCheckData);
           } else {
-            console.log('Check outcome has not changed, no alert needed');
+            debug('Check outcome has not changed, no alert needed');
           }
         } else {
-          console.log('Error try to save the updates checks');
+          debug('Error try to save the updates checks');
         }
       });
 }

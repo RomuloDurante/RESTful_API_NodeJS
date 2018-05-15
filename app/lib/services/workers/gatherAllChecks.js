@@ -6,7 +6,9 @@
  // Dependencies
  const _data = require('../data'),
  helpers = require('../../helpers'),
- performCheck = require('./performCheck');
+ performCheck = require('./performCheck'),
+ util = require('util');
+ debug = util.debuglog('workers');
 // end dependencies
 
 const gatherChecks = {
@@ -26,13 +28,13 @@ const gatherChecks = {
                         // Pass the data to check validator, and let that function continue or not
                         gatherChecks.validateCheckData(checkData);
                       } else {
-                        console.log('Error reading the checks');
+                        debug('Error reading the checks');
                       }
                   });   
                 });
 
             } else {
-              console.log('Error, could not find any check to process');
+              debug('Error, could not find any check to process');
             }
           });
         },
@@ -45,7 +47,7 @@ const gatherChecks = {
               if(validCheck) {
                 performCheck(validCheck);
               } else {
-                console.log('Error: One of the checks is not properly formatted.');
+                debug('Error: One of the checks is not properly formatted.');
               }
           
         },      

@@ -7,7 +7,9 @@
   // Dependencies
 const path = require('path'),
       zlib = require('zlib'),
-      fs = require('fs');
+      fs = require('fs'),
+      util = require('util');
+ debug = util.debuglog('workers');
 /*** */
 
  // create a base directory
@@ -23,8 +25,6 @@ const path = require('path'),
 
           // determine the name of the log file
           var fileName = data.check.id;
-
-            console.log(dataString);//TODO:TESTE
 
           // Open the file for appending
           fs.open(baseDir + fileName+'.log', 'a', (err, fileDescriptor)=>{
@@ -64,20 +64,18 @@ const path = require('path'),
                   // truncate the log
                   _logs.truncate(logId, (err)=>{
                    if(!err) {
-                     console.log(" Sucess truncate the log file");
+                     debug(" Sucess truncate the log file");
                    } else {
-                     console.log("Error truncate the lof file");
+                     debug("Error truncate the lof file");
                    }
                   });
                  } else {
-                  console.log('Erro compressing one of the log files', err);
+                  debug('Erro compressing one of the log files', err);
                  }
               });
             });
-
-
            } else {
-            console.log('Error could not find any logs to rotate');
+            debug('Error could not find any logs to rotate');
            }
         });
       },
