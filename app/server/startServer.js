@@ -17,7 +17,7 @@
         //config HTTP server
         setServer(req, res);        
       }
-      ).listen(config.httpPORT, () => console.log('HTTP Server Start in ['+config.envName+']-mode : PORT-> '+ config.httpPORT));
+      ).listen(config.httpPORT, () => console.log('\x1b[36m%s\x1b[0m','HTTP Server Start in ['+config.envName+']-mode : PORT-> '+ config.httpPORT));
     },
 
     //config HTTPS server
@@ -26,7 +26,7 @@
         //configServers
         setServer(req, res);        
       }
-      ).listen(config.httpsPORT, () => console.log('HTTPS Server Start in ['+config.envName+']-mode : PORT-> '+ config.httpsPORT));
+      ).listen(config.httpsPORT, () => console.log('\x1b[34m%s\x1b[0m','HTTPS Server Start in ['+config.envName+']-mode : PORT-> '+ config.httpsPORT));
     },
   }
 

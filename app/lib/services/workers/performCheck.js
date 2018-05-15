@@ -48,7 +48,7 @@
 
         // Bind the error
         req.on('error', (err)=>{
-          // // Update the check outcome and pass the data along
+          // // If ERROR update the checkPutcome outcome and pass the data along
           checkOutcome.error = {
             'error': true,
             'value': err
@@ -61,10 +61,10 @@
 
         //Bind the timeout 
         req.on('timeout', (err)=>{
-          // // Update the check outcome and pass the data along
+          // //If ERROR update the checkOutcome outcome and pass the data along
           checkOutcome.error = {
             'error': true,
-            'value': 'timeout'
+            'value': timeout
           };
           if(!outcomeSent) {
             processCheckOutcome(validCheck, checkOutcome);

@@ -1,6 +1,7 @@
  // Dependencies
- const _data = require('../data');
-       alertUser = require('./alertUser');
+ const _data = require('../data'),
+       alertUser = require('./alertUser'),
+       log = require('./logs/log');
  /*** */
 
  const processCheckOutcome = (validCheck, checkOutcome)=>{
@@ -14,8 +15,13 @@
       // Update the check data
       var newCheckData = validCheck;
       newCheckData.state = state;
-      newCheckData.lastChecked = Date.now();
+      var timeNow = Date.now();
+      newCheckData.lastChecked = timeNow;
 
+      /****************** */
+      // save the log files wit gzip
+        log.logData(validCheck, checkOutcome, state, alertWanted, timeNow);
+      /***************** */
 
       // save the update
       _data.update('checks', newCheckData.id, newCheckData, (err)=>{
