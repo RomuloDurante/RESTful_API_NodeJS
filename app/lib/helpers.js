@@ -130,22 +130,18 @@
               lastChecked: typeof(checkData.lastChecked) === 'number' && checkData.lastChecked > 0 ? checkData.lastChecked : false,
         }   
 
-        // if(dt.id && 
-        //   dt.lastChecked && 
-        //   dt.method && 
-        //   dt.phone && 
-        //   dt.protocol && 
-        //   dt.state && 
-        //   dt.sucessCode && 
-        //   dt.timeOutSeconds && 
-        //   dt.url){
+        if(dt.id && 
+          dt.method && 
+          dt.phone && 
+          dt.protocol && 
+          dt.sucessCode && 
+          dt.timeOutSeconds && 
+          dt.url){
 
-        //     return dt;
-        // } else {
-        //   return false;
-        // }
-
-        return dt;
+            return dt;
+        } else {
+          return false;
+        }
 
       }
 

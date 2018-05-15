@@ -5,7 +5,7 @@
  
  const startServer = require('./server/startServer'),
              config = require('./lib/config');
-            workers = require('./lib/workers/workers');
+            workers = require('./lib/services/workers/workers');
  // End Dependencies
 
 
@@ -16,8 +16,8 @@ const app = {
     // Start HTTPS server
     startServer.https(config);
 
-    // // Start workers
-    // workers.init();
+    // Start workers
+    workers.init();
 
 
   }

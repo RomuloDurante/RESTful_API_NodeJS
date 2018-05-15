@@ -4,13 +4,13 @@
  */
 
  // Dependencies
-const _data = require('../services/data'),
+const _data = require('../data'),
       path = require('path'),
       fs = require('fs'),
       https = require('https'),
       http = require('http'),
       url = require('url'),
-      helpers = require('../helpers');
+      helpers = require('../../helpers');
  // end dependencies
 
  // Worker object
@@ -168,7 +168,7 @@ const _data = require('../services/data'),
     },
 
     alertUser: (newCheckData)=> {
-      console.log(newCheckData + ' OKKK');
+      console.log(newCheckData + 'Alet is sent');
     }
  }
 
